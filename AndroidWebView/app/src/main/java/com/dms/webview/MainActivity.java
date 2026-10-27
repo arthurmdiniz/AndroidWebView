@@ -337,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
                     .setTitle("Versão")
                     .setMessage("Versão: " + versionName + "\nBuild: " + build)
                     .setPositiveButton("OK", null)
+                    .setNeutralButton("Verificar atualização", (d, w) -> UpdateChecker.check(this))
                     .show();
             return true;
         }
