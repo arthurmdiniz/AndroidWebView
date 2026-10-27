@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo.png" alt="Webview Nativo" width="200" />
+</p>
+
 # Webview Nativo — Android WebView
 
 Aplicativo Android com WebView nativo para acesso ao DMS.
@@ -96,7 +100,18 @@ Para release:
 
 Os sites disponíveis no menu são definidos no array `SITE_NAMES` em `MainActivity.java:37`.
 
-## Documentação
+## Documentação baseada
 
 - https://developer.android.com/reference/android/webkit/WebView
 - https://developer.android.com/guide/topics/connectivity/httpurlconnection
+
+## Sobre o Autor
+
+Ajustado e documentado por **Arthur Marques Diniz**.
+
+Parte deste projeto foi desenvolvida com auxílio de IA (Claude Code) e revisada pelo autor.
+
+*   **GitHub:** [@arthurmdiniz](https://github.com)
+*   **LinkedIn:** [arthurmdiniz](https://www.linkedin.com/in/arthurmdiniz/)
+
+Sinta-se à vontade para enviar *pull requests*, reportar problemas ou propor melhorias!
