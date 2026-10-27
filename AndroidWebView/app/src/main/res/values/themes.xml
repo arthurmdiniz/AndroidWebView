@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DMS" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#411E5A</item>
+        <item name="colorPrimaryDark">#2D1340</item>
+        <item name="colorAccent">#7E57C2</item>
+    </style>
+</resources>

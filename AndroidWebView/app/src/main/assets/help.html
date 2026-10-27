@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajuda — Webview</title>
+<style>
+  :root { --roxo:#411E5A; --roxo-escuro:#2D1340; --roxo-claro:#7E57C2; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:Roboto,Arial,sans-serif; color:#222; background:#F5F5F7; }
+  header { background:var(--roxo); color:#fff; padding:20px 16px; }
+  header h1 { margin:0; font-size:20px; }
+  header .build { margin-top:6px; font-size:13px; opacity:.85; }
+  main { padding:16px; max-width:720px; margin:0 auto; }
+  section { background:#fff; border-radius:10px; padding:16px; margin-bottom:14px;
+            box-shadow:0 1px 3px rgba(0,0,0,.12); }
+  h2 { margin:0 0 10px; font-size:16px; color:var(--roxo); }
+  ul { margin:0; padding-left:18px; }
+  li { margin:6px 0; line-height:1.45; font-size:14.5px; }
+  ol { margin:0; padding-left:20px; }
+  ol li { margin:8px 0; line-height:1.45; font-size:14.5px; }
+  code { background:#EEE; border-radius:4px; padding:1px 5px; font-size:13px; word-break:break-all; }
+  .destaque { background:#EFE7F6; border-left:4px solid var(--roxo-claro); padding:10px 12px;
+              border-radius:0 6px 6px 0; font-size:14px; line-height:1.55; margin-top:10px; }
+  .btn { display:block; text-align:center; background:var(--roxo-claro); color:#fff;
+         text-decoration:none; padding:12px; border-radius:8px; font-size:15px;
+         font-weight:600; margin-top:12px; }
+  .btn:active { background:var(--roxo); }
+  .passo { font-weight:700; color:var(--roxo); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Aplicação Webview</h1>
+  <div class="build">Compilado em: <span id="build">—</span></div>
+</header>
+
+<main>
+
+  <section>
+    <h2>Recursos existentes</h2>
+    <ul>
+      <li>Câmera interna com foco no toque (upload de fotos nos formulários)</li>
+      <li>Múltiplas abas — nova aba, fechar, popups abrem em aba</li>
+      <li>Menu <strong>Sites</strong> — atalhos para os módulos do DMS (Vendas, Oficina, Relatórios...)</li>
+      <li>Gravação de log de requisições de rede (<code>network_AAMMDD.log</code>)</li>
+      <li>Log de erros/crash da aplicação (<code>error_AAMMDD.log</code>)</li>
+      <li>Download e impressão de PDF</li>
+      <li>Abertura de URLs externas no app (deep links)</li>
+      <li>Limpeza de cache/cookies na inicialização</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Configurar a URL do DMS</h2>
+    <ol>
+      <li><span class="passo">1.</span> Tocar no ícone de configurações (chave inglesa) na barra superior</li>
+      <li><span class="passo">2.</span> Informar a URL do DMS desejada, ex.: <code>http://servidor/mobile/</code></li>
+      <li><span class="passo">3.</span> Tocar em <strong>Salvar</strong></li>
+      <li><span class="passo">4.</span> Recarregar o aplicativo para abrir a URL configurada</li>
+    </ol>
+    <a class="btn" href="app://settings">Abrir Configurações</a>
+  </section>
+
+  <section>
+    <h2>Ativar o log da aplicação</h2>
+    <ol>
+      <li><span class="passo">1.</span> Tocar no ícone de configurações (chave inglesa) na barra superior</li>
+      <li><span class="passo">2.</span> Marcar <strong>Salvar requisições de rede (network log)</strong></li>
+      <li><span class="passo">3.</span> Pronto — cada requisição passa a ser gravada em
+          <code>Webview/network_AAMMDD.log</code> no armazenamento do aparelho</li>
+    </ol>
+    <div class="destaque">
+      Para desativar, desmarque a opção — a fila pendente é descartada.<br>
+      <strong>Atenção:</strong> o log contém dados das requisições do sistema;
+      divida os arquivos com cautela.
+    </div>
+  </section>
+
+  <section>
+    <h2>Reabrir esta ajuda</h2>
+    <div class="destaque">Toque no botão <strong>?</strong> da barra superior a qualquer momento.</div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    var m = /[?&]build=([^&]*)/.exec(location.search);
+    if (m && m[1]) document.getElementById('build').textContent = decodeURIComponent(m[1]);
+  })();
+</script>
+
+</body>
+</html>

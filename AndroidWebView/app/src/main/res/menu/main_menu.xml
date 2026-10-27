@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_new_tab"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Nova Aba"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_sites"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Sites"
+        app:showAsAction="always">
+        <menu />
+    </item>
+
+    <item
+        android:id="@+id/menu_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Ajuda"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Configurações"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_version"
+        android:title="Versão"
+        app:showAsAction="never" />
+
+</menu>

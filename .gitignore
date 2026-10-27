@@ -1,0 +1,25 @@
+# ---------- Android / Gradle ----------
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+
+# ---------- Publicação (saída de builds) ----------
+publish/
+
+# ---------- Logs (CREDENCIAIS de clientes — NUNCA versionar) ----------
+Log/
+*.log
+
+# ---------- Config local da máquina ----------
+config.json
+
+# ---------- Lixo do Windows ----------
+Thumbs.db
+desktop.ini

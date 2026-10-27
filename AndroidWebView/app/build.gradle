@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.dms.webview'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.dms.webview"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "BUILD_TIME", "\"${new Date().format('ddMMyyyy.HHmm', TimeZone.getTimeZone('America/Sao_Paulo'))}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}
+
+task publishApk(type: Copy) {
+    from "$buildDir/outputs/apk/debug/app-debug.apk"
+    into "$rootDir/../publish"
+    rename 'app-debug.apk', 'Webview-Nativo.apk'
+}
+
+task publishReleaseApk(type: Copy) {
+    from "$buildDir/outputs/apk/release/app-release.apk"
+    into "$rootDir/../publish"
+    rename 'app-release.apk', 'Webview-Nativo.apk'
+}
+
+afterEvaluate {
+    tasks.matching { it.name.startsWith('assemble') }.configureEach { task ->
+        task.finalizedBy tasks.matching { it.name == 'publishApk' || it.name == 'publishReleaseApk' }
+    }
+}
