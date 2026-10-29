@@ -29,6 +29,11 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/menu_network_diagnostics"
+        android:title="Diagnóstico de rede"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_version"
         android:title="Versão"
         app:showAsAction="never" />

@@ -95,11 +95,33 @@ public class MainActivity extends AppCompatActivity {
 
         activeInstances.add(this);
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            String url = Config.loadUrl(this);
-            addTab(url != null ? url : helpUrl());
-            handleIntent(getIntent());
-        }, 500);
+        ProxyManager.init(this);
+        ProxyManager.warmUpWebView(this);
+
+        new Handler(Looper.getMainLooper()).postDelayed(() ->
+            ProxyManager.applyToWebView(this, () -> {
+                String url = Config.loadUrl(this);
+                addTab(url != null ? url : helpUrl());
+                handleIntent(getIntent());
+                if (Config.MODE_AUTO.equals(Config.getProxyMode(this))) {
+                    ProxyManager.discover(this, changed -> {
+                        if (changed) reloadAllTabs();
+                    });
+                }
+            }), 500);
+    }
+
+    static void reloadProxyTabs() {
+        for (MainActivity act : activeInstances) {
+            act.reloadAllTabs();
+        }
+    }
+
+    void reloadAllTabs() {
+        if (tabs == null) return;
+        for (WebViewTab tab : tabs) {
+            tab.getWebView().reload();
+        }
     }
 
     @Override
@@ -324,6 +346,15 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.menu_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        if (id == R.id.menu_network_diagnostics) {
+            ProxyManager.runDiagnostics(this, text ->
+                new AlertDialog.Builder(this)
+                    .setTitle("Diagnóstico de rede")
+                    .setMessage(text)
+                    .setPositiveButton("OK", null)
+                    .show());
             return true;
         }
         if (id == R.id.menu_version) {

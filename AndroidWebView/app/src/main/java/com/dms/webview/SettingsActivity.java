@@ -2,6 +2,7 @@ package com.dms.webview;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -12,6 +13,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+    private RadioGroup rgProxyMode;
+    private EditText proxyHost;
+    private EditText proxyPort;
+    private TextView tvProxyStatus;
+    private Button btnProxyDetect;
+    private Button btnProxyTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,13 +81,32 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
         });
 
+        setupProxySection();
+
         findViewById(R.id.btn_save).setOnClickListener(v -> {
             String url = urlInput.getText().toString().trim();
             if (url.isEmpty()) {
                 Toast.makeText(this, "URL não pode estar vazia", Toast.LENGTH_SHORT).show();
                 return;
             }
+            String mode = selectedProxyMode();
+            if (Config.MODE_MANUAL.equals(mode)) {
+                String host = proxyHost.getText().toString().trim();
+                int port = parsePort(proxyPort.getText().toString());
+                if (host.isEmpty() || port < 1) {
+                    Toast.makeText(this, "Informe servidor e porta válidos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Config.setProxyHost(this, host);
+                Config.setProxyPort(this, port);
+            }
+            Config.setProxyMode(this, mode);
+            Config.setProxyBypassLocalEnabled(this,
+                ((CheckBox) findViewById(R.id.chk_proxy_bypass)).isChecked());
+
             Config.saveUrl(this, url);
+            ProxyManager.init(this);
+            ProxyManager.applyToWebView(this, MainActivity::reloadProxyTabs);
             Toast.makeText(this, "URL salva. Recarregue o app.", Toast.LENGTH_SHORT).show();
             finish();
         });
@@ -96,5 +123,85 @@ public class SettingsActivity extends AppCompatActivity {
                 .setNegativeButton("Não", null)
                 .show();
         });
+    }
+
+    private void setupProxySection() {
+        rgProxyMode = findViewById(R.id.rg_proxy_mode);
+        proxyHost = findViewById(R.id.proxy_host);
+        proxyPort = findViewById(R.id.proxy_port);
+        tvProxyStatus = findViewById(R.id.tv_proxy_status);
+        btnProxyDetect = findViewById(R.id.btn_proxy_detect);
+        btnProxyTest = findViewById(R.id.btn_proxy_test);
+        CheckBox chkProxyBypass = findViewById(R.id.chk_proxy_bypass);
+
+        String mode = Config.getProxyMode(this);
+        rgProxyMode.check(Config.MODE_MANUAL.equals(mode) ? R.id.rb_proxy_manual
+            : Config.MODE_OFF.equals(mode) ? R.id.rb_proxy_off
+            : R.id.rb_proxy_auto);
+        chkProxyBypass.setChecked(Config.isProxyBypassLocalEnabled(this));
+        tvProxyStatus.setText(ProxyManager.status());
+        showProxyFields(mode);
+
+        rgProxyMode.setOnCheckedChangeListener((group, checkedId) -> showProxyFields(selectedProxyMode()));
+
+        btnProxyDetect.setOnClickListener(v -> {
+            String selected = selectedProxyMode();
+            Config.setProxyMode(this, selected);
+            setProxyBusy(true, "Procurando proxy...");
+            ProxyManager.discover(this, changed -> {
+                setProxyBusy(false, ProxyManager.status());
+                if (Config.MODE_MANUAL.equals(selected) && !Config.getProxyCachedHost(this).isEmpty()) {
+                    proxyHost.setText(Config.getProxyCachedHost(this));
+                    proxyPort.setText(String.valueOf(Config.getProxyCachedPort(this)));
+                }
+                showProxyFields(selected);
+                if (changed) MainActivity.reloadProxyTabs();
+            });
+        });
+
+        btnProxyTest.setOnClickListener(v -> {
+            setProxyBusy(true, "Testando conexão...");
+            new Thread(() -> {
+                String result = ProxyManager.testConnection();
+                runOnUiThread(() -> setProxyBusy(false, "Teste: " + result));
+            }).start();
+        });
+    }
+
+    private void showProxyFields(String mode) {
+        boolean manual = Config.MODE_MANUAL.equals(mode);
+        if (Config.MODE_AUTO.equals(mode)) {
+            String cachedHost = Config.getProxyCachedHost(this);
+            proxyHost.setText(cachedHost);
+            proxyPort.setText(cachedHost.isEmpty() ? String.valueOf(Config.DEFAULT_PROXY_PORT)
+                : String.valueOf(Config.getProxyCachedPort(this)));
+        } else if (manual && proxyHost.getText().toString().trim().isEmpty()) {
+            proxyHost.setText(Config.getProxyHost(this));
+            proxyPort.setText(String.valueOf(Config.getProxyPort(this)));
+        }
+        proxyHost.setEnabled(manual);
+        proxyPort.setEnabled(manual);
+    }
+
+    private void setProxyBusy(boolean busy, String message) {
+        btnProxyDetect.setEnabled(!busy);
+        btnProxyTest.setEnabled(!busy);
+        tvProxyStatus.setText(message);
+    }
+
+    private String selectedProxyMode() {
+        int checked = rgProxyMode.getCheckedRadioButtonId();
+        return checked == R.id.rb_proxy_manual ? Config.MODE_MANUAL
+            : checked == R.id.rb_proxy_off ? Config.MODE_OFF
+            : Config.MODE_AUTO;
+    }
+
+    private static int parsePort(String raw) {
+        try {
+            int port = Integer.parseInt(raw.trim());
+            return port >= 1 && port <= 65535 ? port : -1;
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 }

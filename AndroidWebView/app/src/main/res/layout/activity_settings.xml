@@ -1,117 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="URL inicial:"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/url_input"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="http://..."
-        android:inputType="textUri" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <CheckBox
-        android:id="@+id/chk_network_logging"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Salvar requisições de rede (network log)" />
-
-    <CheckBox
-        android:id="@+id/chk_side_capture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Botão de captura na lateral direita" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Qualidade da foto:"
-        android:textSize="16sp" />
-
-    <RadioGroup
-        android:id="@+id/rg_photo_quality"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_quality_low"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Baixa" />
+            android:text="URL inicial:"
+            android:textSize="16sp" />
 
-        <RadioButton
-            android:id="@+id/rb_quality_medium"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/url_input"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Média" />
+            android:layout_marginTop="8dp"
+            android:hint="http://..."
+            android:inputType="textUri" />
 
-        <RadioButton
-            android:id="@+id/rb_quality_high"
-            android:layout_width="0dp"
+        <CheckBox
+            android:id="@+id/chk_network_logging"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Alta" />
-    </RadioGroup>
+            android:layout_marginTop="16dp"
+            android:text="Salvar requisições de rede (network log)" />
 
-    <TextView
-        android:id="@+id/tv_camera_engine_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="14sp"
-        android:visibility="gone" />
-
-    <RadioGroup
-        android:id="@+id/rg_camera_engine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <RadioButton
-            android:id="@+id/rb_engine_legacy"
-            android:layout_width="0dp"
+        <CheckBox
+            android:id="@+id/chk_side_capture"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Legado" />
+            android:layout_marginTop="16dp"
+            android:text="Botão de captura na lateral direita" />
 
-        <RadioButton
-            android:id="@+id/rb_engine_camera2"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Moderno (Camera2)" />
-    </RadioGroup>
+            android:layout_marginTop="16dp"
+            android:text="Qualidade da foto:"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Salvar" />
+        <RadioGroup
+            android:id="@+id/rg_photo_quality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_clear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Resetar para padrão" />
+            <RadioButton
+                android:id="@+id/rb_quality_low"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Baixa" />
 
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/rb_quality_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Média" />
+
+            <RadioButton
+                android:id="@+id/rb_quality_high"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Alta" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_camera_engine_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <RadioGroup
+            android:id="@+id/rg_camera_engine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/rb_engine_legacy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Legado" />
+
+            <RadioButton
+                android:id="@+id/rb_engine_camera2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Moderno (Camera2)" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_proxy_group"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proxy"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rg_proxy_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_proxy_auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Detectar automaticamente (WPAD)" />
+
+                <RadioButton
+                    android:id="@+id/rb_proxy_manual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Usar proxy manual" />
+
+                <RadioButton
+                    android:id="@+id/rb_proxy_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Não usar proxy" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/proxy_host"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Servidor (ex.: 10.0.0.1)"
+                android:inputType="textUri" />
+
+            <EditText
+                android:id="@+id/proxy_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Porta"
+                android:inputType="number" />
+
+            <CheckBox
+                android:id="@+id/chk_proxy_bypass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:checked="true"
+                android:text="Ignorar proxy para endereços locais" />
+
+            <TextView
+                android:id="@+id/tv_proxy_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_proxy_detect"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Detectar agora" />
+
+                <Button
+                    android:id="@+id/btn_proxy_test"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Testar conexão" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Salvar" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Resetar para padrão" />
+
+    </LinearLayout>
+</ScrollView>

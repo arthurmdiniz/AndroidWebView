@@ -37,9 +37,7 @@ public class PdfHandler {
     public static void handle(final Context context, final String pdfUrl) {
         new Thread(() -> {
             try {
-                HttpURLConnection conn = (HttpURLConnection) new URL(pdfUrl).openConnection();
-                conn.setConnectTimeout(15000);
-                conn.setReadTimeout(30000);
+                HttpURLConnection conn = ProxyManager.open(new URL(pdfUrl), 15000, 30000);
 
                 File dir = new File(new File(Environment.getExternalStorageDirectory(), "Webview"), "tmp");
                 dir.mkdirs();

@@ -76,9 +76,7 @@ public class UpdateChecker {
     }
 
     private static JSONObject fetchLatestRelease() throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) new URL(LATEST_RELEASE_URL).openConnection();
-        conn.setConnectTimeout(TIMEOUT_MS);
-        conn.setReadTimeout(TIMEOUT_MS);
+        HttpURLConnection conn = ProxyManager.open(new URL(LATEST_RELEASE_URL), TIMEOUT_MS, TIMEOUT_MS);
         conn.setRequestProperty("Accept", "application/vnd.github+json");
         try {
             int code = conn.getResponseCode();
@@ -155,9 +153,7 @@ public class UpdateChecker {
             for (File f : old) f.delete();
         }
         File apk = new File(dir, APK_NAME);
-        HttpURLConnection conn = (HttpURLConnection) new URL(apkUrl).openConnection();
-        conn.setConnectTimeout(TIMEOUT_MS);
-        conn.setReadTimeout(TIMEOUT_MS);
+        HttpURLConnection conn = ProxyManager.open(new URL(apkUrl), TIMEOUT_MS, TIMEOUT_MS);
         try {
             int code = conn.getResponseCode();
             if (code != HttpURLConnection.HTTP_OK) {

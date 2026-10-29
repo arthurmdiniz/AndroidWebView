@@ -76,6 +76,24 @@ AndroidWebView/
 - **Configurações** — URL inicial configurável e toggle de network log
 - **Tema personalizado** — roxo (#411E5A)
 - **Deep links** — abre URLs HTTP/HTTPS diretamente (intent filter)
+- **Proxy / WPAD** — detecta o proxy da rede (`http://wpad/wpad.dat` e `wpad.<domínio>`) ou usa
+  host/porta digitados; o proxy vale para o WebView e para as chamadas nativas (atualização e PDF)
+
+## Proxy / WPAD
+
+Em redes com proxy automático (WPAD), o Android não resolve o proxy sozinho. Em **Configurações →
+Proxy** há três modos:
+
+- **Detectar automaticamente (WPAD)** — procura `wpad.dat` na rede, valida o proxy com uma
+  requisição a `drive.google.com` e guarda o resultado em cache. As regras `shExpMatch` do próprio
+  `wpad.dat` viram o bypass (endereços que vão direto).
+- **Usar proxy manual** — usa o host e a porta digitados.
+- **Não usar proxy** — conexão direta.
+
+"Detectar agora" e "Testar conexão" agem na hora; o modo escolhido só vale após **Salvar**.
+Com "Ignorar proxy para endereços locais" marcado, `localhost`, `127.0.0.1`, `192.168.*` e `10.*`
+nunca passam pelo proxy. Em **Menu → Diagnóstico de rede** é possível ver o proxy ativo, a origem e
+o resultado do teste.
 
 ## Compilar
 
